@@ -21,10 +21,10 @@ import (
 	"testing"
 
 	"github.com/pkg/errors"
-	exectest "github.com/rook/rook/pkg/util/exec/test"
 	kerrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	kexec "k8s.io/utils/exec"
+	exectest "storage-provisioner/util/exec/test"
 )
 
 func Test_assertErrorType(t *testing.T) {

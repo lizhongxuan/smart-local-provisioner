@@ -18,8 +18,8 @@ package sys
 import (
 	"fmt"
 	"os/exec"
-	"strings"
 	pkgexec "storage-provisioner/util/exec"
+	"strings"
 )
 
 func getKernelVersion() (string, error) {

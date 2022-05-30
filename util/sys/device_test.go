@@ -17,9 +17,9 @@ package sys
 
 import (
 	"fmt"
-	"testing"
-	exectest "storage-provisioner/util/exec/test"
 	"github.com/stretchr/testify/assert"
+	exectest "storage-provisioner/util/exec/test"
+	"testing"
 )
 
 const (

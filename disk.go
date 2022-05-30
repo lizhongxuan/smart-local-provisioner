@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"github.com/coreos/pkg/capnslog"
@@ -18,7 +17,7 @@ var (
 	isRBD  = regexp.MustCompile("^rbd[0-9]+p?[0-9]{0,}$")
 )
 
-func probeDevices(context *context.Context, executor pkgexec.Executor) ([]sys.LocalDisk, error) {
+func probeDevices(executor pkgexec.Executor) ([]sys.LocalDisk, error) {
 	devices := make([]sys.LocalDisk, 0)
 	localDevices, err := DiscoverDevices(executor)
 	if err != nil {
