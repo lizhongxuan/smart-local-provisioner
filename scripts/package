@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+source $(dirname $0)/version
+
+cd $(dirname $0)/..
+
+mkdir -p dist/artifacts
+cp bin/smart-local-provisioner dist/artifacts/smart-local-provisioner${SUFFIX}
+
+IMAGE=${REPO}/smart-local-provisioner:${TAG}
+DOCKERFILE=package/Dockerfile
+if [ -e ${DOCKERFILE}.${ARCH} ]; then
+    DOCKERFILE=${DOCKERFILE}.${ARCH}
+fi
+
+docker build -f ${DOCKERFILE} -t ${IMAGE} .
+echo Built ${IMAGE}
+
+echo ${IMAGE} > ./bin/latest_image

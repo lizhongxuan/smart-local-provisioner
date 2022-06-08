@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+cd $(dirname $0)
+
+./build
+./test
+./validate
+./validate-ci
+./package
+
+image=`cat ../bin/latest_image`
+
+echo
+echo Local Path Provisioner image: ${image}
