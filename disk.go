@@ -6,14 +6,14 @@ import (
 	"github.com/coreos/pkg/capnslog"
 	"path"
 	"regexp"
-	pkgexec "storage-provisioner/util/exec"
-	"storage-provisioner/util/sys"
+	pkgexec "smart-local-provisioner/util/exec"
+	"smart-local-provisioner/util/sys"
 	"strconv"
 	"strings"
 )
 
 var (
-	logger = capnslog.NewPackageLogger("github.com/lizhongxuan/storage-provisioner", "discover")
+	logger = capnslog.NewPackageLogger("github.com/lizhongxuan/smart-local-provisioner", "discover")
 	isRBD  = regexp.MustCompile("^rbd[0-9]+p?[0-9]{0,}$")
 )
 

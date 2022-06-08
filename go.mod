@@ -1,4 +1,4 @@
-module storage-provisioner
+module smart-local-provisioner
 
 go 1.16
 

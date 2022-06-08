@@ -24,7 +24,7 @@ import (
 	kerrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	kexec "k8s.io/utils/exec"
-	exectest "storage-provisioner/util/exec/test"
+	exectest "smart-local-provisioner/util/exec/test"
 )
 
 func Test_assertErrorType(t *testing.T) {

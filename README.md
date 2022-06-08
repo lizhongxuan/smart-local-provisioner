@@ -1,8 +1,8 @@
-# Storage Provisioner
+# Smart Local Provisioner
 
 ## Overview
 
-Storage Provisioner Based on LocalPath Provisioner. Storage Provisioner provides a way for the Kubernetes users to utilize the local storage in each node. Find available disks based on user configuration or automatically, the Local Path Provisioner will create `hostPath` based persistent volume on the node automatically. It utilizes the features introduced by Kubernetes [Local Persistent Volume feature](https://kubernetes.io/blog/2018/04/13/local-persistent-volumes-beta/), but make it a simpler solution than the built-in `local` volume feature in Kubernetes.
+Smart-Local-Provisioner Based on Local-Path-Provisioner. Storage Provisioner provides a way for the Kubernetes users to utilize the local storage in each node. Find available disks based on user configuration or automatically, the Local Path Provisioner will create `hostPath` based persistent volume on the node automatically. It utilizes the features introduced by Kubernetes [Local Persistent Volume feature](https://kubernetes.io/blog/2018/04/13/local-persistent-volumes-beta/), but make it a simpler solution than the built-in `local` volume feature in Kubernetes.
 
 
 ### Features

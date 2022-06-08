@@ -23,19 +23,19 @@ var (
 	FlagConfigFile                = "config"
 	FlagProvisionerName           = "provisioner-name"
 	EnvProvisionerName            = "PROVISIONER_NAME"
-	DefaultProvisionerName        = "lizhongxuan/local-storage"
+	DefaultProvisionerName        = "smart-local-provisioner"
 	FlagNamespace                 = "namespace"
 	EnvNamespace                  = "POD_NAMESPACE"
-	DefaultNamespace              = "local-storage"
+	DefaultNamespace              = "smart-local"
 	FlagHelperImage               = "helper-image"
 	EnvHelperImage                = "HELPER_IMAGE"
 	DefaultHelperImage            = "rancher/library-busybox:1.32.1"
 	FlagServiceAccountName        = "service-account-name"
-	DefaultServiceAccount         = "storage-provisioner-service-account"
+	DefaultServiceAccount         = "smart-local-provisioner-service-account"
 	EnvServiceAccountName         = "SERVICE_ACCOUNT_NAME"
 	FlagKubeconfig                = "kubeconfig"
 	DefaultConfigFileKey          = "config.json"
-	DefaultConfigMapName          = "local-path-config"
+	DefaultConfigMapName          = "smart-local-config"
 	FlagConfigMapName             = "configmap-name"
 	FlagHelperPodFile             = "helper-pod-file"
 	DefaultHelperPodFile          = "helperPod.yaml"
@@ -283,7 +283,7 @@ func main() {
 
 	a := cli.NewApp()
 	a.Version = VERSION
-	a.Usage = "Local Path Provisioner"
+	a.Usage = "Smart Local Provisioner"
 
 	a.Before = func(c *cli.Context) error {
 		if c.GlobalBool("debug") {
@@ -296,7 +296,7 @@ func main() {
 		cli.BoolFlag{
 			Name:   "debug, d",
 			Usage:  "enable debug logging level",
-			EnvVar: "LIZHONGXUAN_DEBUG",
+			EnvVar: "SMART_LOCAL_DEBUG",
 		},
 	}
 	a.Commands = []cli.Command{

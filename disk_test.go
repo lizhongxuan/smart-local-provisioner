@@ -2,8 +2,8 @@ package main
 
 import (
 	"reflect"
-	pkgexec "storage-provisioner/util/exec"
-	"storage-provisioner/util/sys"
+	pkgexec "smart-local-provisioner/util/exec"
+	"smart-local-provisioner/util/sys"
 	"testing"
 )
 

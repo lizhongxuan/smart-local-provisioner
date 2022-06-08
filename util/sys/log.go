@@ -17,4 +17,4 @@ package sys
 
 import "github.com/coreos/pkg/capnslog"
 
-var logger = capnslog.NewPackageLogger("github.com/lizhongxuan/storage-privisioner", "sys")
+var logger = capnslog.NewPackageLogger("github.com/lizhongxuan/smart-local-provisioner", "sys")
