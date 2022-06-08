@@ -3,7 +3,7 @@
 replicaCount: 1
 
 image:
-  repository: rancher/local-path-provisioner
+  repository: lizhongxuan/smart-local-provisioner
   tag: master-head
   pullPolicy: IfNotPresent
 
@@ -28,7 +28,7 @@ storageClass:
   create: true
 
   ## Set a provisioner name. If unset, a name will be generated.
-  # provisionerName: rancher.io/local-path
+  # provisionerName: lizhongxuan.io/local-path
 
   ## Set StorageClass as the default StorageClass
   ## Ignored if storageClass.create is false
@@ -56,7 +56,7 @@ storageClass:
 nodePathMap:
   - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
     paths:
-      - /opt/local-path-provisioner
+      - /opt/smart-local-provisioner
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

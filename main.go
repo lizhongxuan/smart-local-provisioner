@@ -29,7 +29,7 @@ var (
 	DefaultNamespace              = "smart-local"
 	FlagHelperImage               = "helper-image"
 	EnvHelperImage                = "HELPER_IMAGE"
-	DefaultHelperImage            = "rancher/library-busybox:1.32.1"
+	DefaultHelperImage            = "lizhongxuan/library-busybox:1.32.1"
 	FlagServiceAccountName        = "service-account-name"
 	DefaultServiceAccount         = "smart-local-provisioner-service-account"
 	EnvServiceAccountName         = "SERVICE_ACCOUNT_NAME"

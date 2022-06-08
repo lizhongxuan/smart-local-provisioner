@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: local-path-provisioner
+  name: smart-local-provisioner
   namespace: local-path-storage
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: local-path-provisioner
+      app: smart-local-provisioner
   template:
     metadata:
       labels:
-        app: local-path-provisioner
+        app: smart-local-provisioner
     spec:
-      serviceAccountName: local-path-provisioner-service-account
+      serviceAccountName: smart-local-provisioner-service-account
       containers:
-        - name: local-path-provisioner
-          image: rancher/local-path-provisioner:master-head
+        - name: smart-local-provisioner
+          image: lizhongxuan/smart-local-provisioner:master-head
           imagePullPolicy: Always
           command:
-            - local-path-provisioner
+            - smart-local-provisioner
             - --debug
             - start
             - --config

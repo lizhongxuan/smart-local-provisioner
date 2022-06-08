@@ -15,7 +15,7 @@ RUN if [ "${ARCH}" == "amd64" ]; then \
     fi
 
 ENV DAPPER_ENV REPO TAG DRONE_TAG
-ENV DAPPER_SOURCE /go/src/github.com/rancher/local-path-provisioner/
+ENV DAPPER_SOURCE /go/src/github.com/lizhongxuan/smart-local-provisioner/
 ENV DAPPER_OUTPUT ./bin ./dist
 ENV DAPPER_DOCKER_SOCKET true
 ENV DAPPER_RUN_ARGS --network=host

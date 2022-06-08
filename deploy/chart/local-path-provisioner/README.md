@@ -1,6 +1,6 @@
 # Local Path Provisioner
 
-[Local Path Provisioner](https://github.com/rancher/local-path-provisioner) provides a way for the Kubernetes users to
+[Local Path Provisioner](https://github.com/lizhongxuan/local-path-provisioner) provides a way for the Kubernetes users to
 utilize the local storage in each node. Based on the user configuration, the Local Path Provisioner will create
 `hostPath` based persistent volume on the node automatically. It utilizes the features introduced by Kubernetes [Local
 Persistent Volume feature](https://kubernetes.io/blog/2018/04/13/local-persistent-volumes-beta/), but make it a simpler
@@ -9,14 +9,14 @@ solution than the built-in `local` volume feature in Kubernetes.
 ## TL;DR;
 
 ```console
-$ git clone https://github.com/rancher/local-path-provisioner.git
+$ git clone https://github.com/lizhongxuan/local-path-provisioner.git
 $ cd local-path-provisioner
 $ helm install --name local-path-storage --namespace local-path-storage ./deploy/chart/
 ```
 
 ## Introduction
 
-This chart bootstraps a [Local Path Provisioner](https://github.com/rancher/local-path-provisioner) deployment on a
+This chart bootstraps a [Local Path Provisioner](https://github.com/lizhongxuan/local-path-provisioner) deployment on a
 [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
@@ -28,7 +28,7 @@ This chart bootstraps a [Local Path Provisioner](https://github.com/rancher/loca
 To install the chart with the release name `local-path-storage`:
 
 ```console
-$ git clone https://github.com/rancher/local-path-provisioner.git
+$ git clone https://github.com/lizhongxuan/local-path-provisioner.git
 $ cd local-path-provisioner
 $ helm install ./deploy/chart/ --name local-path-storage --namespace local-path-storage
 ```
@@ -55,7 +55,7 @@ default values.
 
 | Parameter                           | Description                                                                     | Default                                                                             |
 | ----------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `image.repository`                  | Local Path Provisioner image name                                               | `rancher/local-path-provisioner`                                                    |
+| `image.repository`                  | Local Path Provisioner image name                                               | `lizhongxuan/local-path-provisioner`                                                    |
 | `image.tag`                         | Local Path Provisioner image tag                                                | `master-head`                                                                       |
 | `image.pullPolicy`                  | Image pull policy                                                               | `IfNotPresent`                                                                      |
 | `storageClass.create`               | If true, create a `StorageClass`                                                | `true`                                                                              |
@@ -80,7 +80,7 @@ default values.
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```console
-$ helm install ./deploy/chart/ --name local-path-storage --namespace local-path-storage --set storageClass.provisionerName=rancher.io/local-path
+$ helm install ./deploy/chart/ --name local-path-storage --namespace local-path-storage --set storageClass.provisionerName=lizhongxuan.io/local-path
 ```
 
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the

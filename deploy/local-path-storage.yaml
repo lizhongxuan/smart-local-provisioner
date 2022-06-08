@@ -7,14 +7,14 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: local-path-provisioner-service-account
+  name: smart-local-provisioner-service-account
   namespace: local-path-storage
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: local-path-provisioner-role
+  name: smart-local-provisioner-role
 rules:
   - apiGroups: [ "" ]
     resources: [ "nodes", "persistentvolumeclaims", "configmaps" ]
@@ -33,39 +33,39 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: local-path-provisioner-bind
+  name: smart-local-provisioner-bind
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: local-path-provisioner-role
+  name: smart-local-provisioner-role
 subjects:
   - kind: ServiceAccount
-    name: local-path-provisioner-service-account
+    name: smart-local-provisioner-service-account
     namespace: local-path-storage
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: local-path-provisioner
+  name: smart-local-provisioner
   namespace: local-path-storage
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: local-path-provisioner
+      app: smart-local-provisioner
   template:
     metadata:
       labels:
-        app: local-path-provisioner
+        app: smart-local-provisioner
     spec:
-      serviceAccountName: local-path-provisioner-service-account
+      serviceAccountName: smart-local-provisioner-service-account
       containers:
-        - name: local-path-provisioner
-          image: rancher/local-path-provisioner:master-head
+        - name: smart-local-provisioner
+          image: lizhongxuan/smart-local-provisioner:master-head
           imagePullPolicy: IfNotPresent
           command:
-            - local-path-provisioner
+            - smart-local-provisioner
             - --debug
             - start
             - --config
@@ -88,7 +88,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: local-path
-provisioner: rancher.io/local-path
+provisioner: lizhongxuan.io/local-path
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
 

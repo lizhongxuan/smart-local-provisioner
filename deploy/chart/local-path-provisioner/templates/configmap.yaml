@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.configmap.name }}
   labels:
-{{ include "local-path-provisioner.labels" . | indent 4 }}
+{{ include "smart-local-provisioner.labels" . | indent 4 }}
 data:
   config.json: |-
     {
