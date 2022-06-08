@@ -419,7 +419,6 @@ func (p *LocalPathProvisioner) createHelperPod(action ActionType, cmd []string, 
 	}
 
 	// use different name for helper pods
-	// https://github.com/rancher/local-path-provisioner/issues/154
 	helperPod.Name = (helperPod.Name + "-" + string(action) + "-" + o.Name)
 	if len(helperPod.Name) > HelperPodNameMaxLength {
 		helperPod.Name = helperPod.Name[:HelperPodNameMaxLength]
@@ -437,7 +436,6 @@ func (p *LocalPathProvisioner) createHelperPod(action ActionType, cmd []string, 
 		"-m", string(o.Mode)}
 
 	// If it already exists due to some previous errors, the pod will be cleaned up later automatically
-	// https://github.com/rancher/local-path-provisioner/issues/27
 	logrus.Infof("create the helper pod %s into %s", helperPod.Name, p.namespace)
 	_, err = p.kubeClient.CoreV1().Pods(p.namespace).Create(helperPod)
 	if err != nil && !k8serror.IsAlreadyExists(err) {

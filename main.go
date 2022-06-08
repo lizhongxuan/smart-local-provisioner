@@ -23,15 +23,15 @@ var (
 	FlagConfigFile                = "config"
 	FlagProvisionerName           = "provisioner-name"
 	EnvProvisionerName            = "PROVISIONER_NAME"
-	DefaultProvisionerName        = "rancher.io/local-path"
+	DefaultProvisionerName        = "lizhongxuan/local-storage"
 	FlagNamespace                 = "namespace"
 	EnvNamespace                  = "POD_NAMESPACE"
-	DefaultNamespace              = "local-path-storage"
+	DefaultNamespace              = "local-storage"
 	FlagHelperImage               = "helper-image"
 	EnvHelperImage                = "HELPER_IMAGE"
 	DefaultHelperImage            = "rancher/library-busybox:1.32.1"
 	FlagServiceAccountName        = "service-account-name"
-	DefaultServiceAccount         = "local-path-provisioner-service-account"
+	DefaultServiceAccount         = "storage-provisioner-service-account"
 	EnvServiceAccountName         = "SERVICE_ACCOUNT_NAME"
 	FlagKubeconfig                = "kubeconfig"
 	DefaultConfigFileKey          = "config.json"
@@ -296,7 +296,7 @@ func main() {
 		cli.BoolFlag{
 			Name:   "debug, d",
 			Usage:  "enable debug logging level",
-			EnvVar: "RANCHER_DEBUG",
+			EnvVar: "LIZHONGXUAN_DEBUG",
 		},
 	}
 	a.Commands = []cli.Command{

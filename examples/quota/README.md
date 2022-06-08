@@ -10,10 +10,10 @@ Notice:
 
 # debug
 ```Bash
-> git clone https://github.com/rancher/local-path-provisioner.git
-> cd local-path-provisioner
+> git clone https://github.com/lizhongxuan/storage-provisioner.git
+> cd storage-provisioner
 > go build
 > kubectl apply -k examples/quota
-> kubectl delete -n local-path-storage deployment local-path-provisioner
-> ./local-path-provisioner --debug start --namespace=local-path-storage
+> kubectl delete -n local-path-storage deployment storage-provisioner
+> ./storage-provisioner --debug start --namespace=local-storage
 ```
