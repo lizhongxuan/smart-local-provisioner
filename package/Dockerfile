@@ -1,3 +1,3 @@
 FROM alpine
-COPY bin/local-path-provisioner /usr/bin/
-CMD ["local-path-provisioner"]
+COPY bin/smart-local-provisioner /usr/bin/
+CMD ["smart-local-provisioner"]

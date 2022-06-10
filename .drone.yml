@@ -40,7 +40,7 @@ steps:
     dockerfile: package/Dockerfile
     password:
       from_secret: docker_password
-    repo: "rancher/local-path-provisioner"
+    repo: "lizhongxuan/smart-local-provisioner"
     tag: "${DRONE_BRANCH}-head-amd64"
     username:
       from_secret: docker_username
@@ -56,7 +56,7 @@ steps:
     dockerfile: package/Dockerfile
     password:
       from_secret: docker_password
-    repo: "rancher/local-path-provisioner"
+    repo: "lizhongxuan/smart-local-provisioner"
     tag: "${DRONE_TAG}-amd64"
     username:
       from_secret: docker_username
@@ -113,7 +113,7 @@ steps:
     dockerfile: package/Dockerfile
     password:
       from_secret: docker_password
-    repo: "rancher/local-path-provisioner"
+    repo: "lizhongxuan/smart-local-provisioner"
     tag: "${DRONE_BRANCH}-head-arm64"
     username:
       from_secret: docker_username
@@ -129,7 +129,7 @@ steps:
     dockerfile: package/Dockerfile
     password:
       from_secret: docker_password
-    repo: "rancher/local-path-provisioner"
+    repo: "lizhongxuan/smart-local-provisioner"
     tag: "${DRONE_TAG}-arm64"
     username:
       from_secret: docker_username
@@ -185,7 +185,7 @@ steps:
     dockerfile: package/Dockerfile
     password:
       from_secret: docker_password
-    repo: "rancher/local-path-provisioner"
+    repo: "lizhonguan/smart-local-provisioner"
     tag: "${DRONE_BRANCH}-head-arm"
     username:
       from_secret: docker_username
@@ -201,7 +201,7 @@ steps:
     dockerfile: package/Dockerfile
     password:
       from_secret: docker_password
-    repo: "rancher/local-path-provisioner"
+    repo: "lizhongxuan/smart-local-provisioner"
     tag: "${DRONE_TAG}-arm"
     username:
       from_secret: docker_username
@@ -264,7 +264,7 @@ steps:
     dockerfile: package/Dockerfile
     password:
       from_secret: docker_password
-    repo: "rancher/local-path-provisioner"
+    repo: "lizhongxuan/smart-local-provisioner"
     tag: "${DRONE_BRANCH}-head-s390x"
     username:
       from_secret: docker_username
@@ -283,7 +283,7 @@ steps:
     dockerfile: package/Dockerfile
     password:
       from_secret: docker_password
-    repo: "rancher/local-path-provisioner"
+    repo: "lizhongxuan/smart-local-provisioner"
     tag: "${DRONE_TAG}-s390x"
     username:
       from_secret: docker_username
@@ -319,8 +319,8 @@ steps:
       - linux/arm64
       - linux/arm
       - linux/s390x
-    target: "rancher/local-path-provisioner:${DRONE_BRANCH}-head"
-    template: "rancher/local-path-provisioner:${DRONE_BRANCH}-head-ARCH"
+    target: "lizhongxuan/smart-local-provisioner:${DRONE_BRANCH}-head"
+    template: "lizhongxuan/smart-local-provisioner:${DRONE_BRANCH}-head-ARCH"
   when:
     instance:
     - drone-publish.rancher.io
@@ -339,8 +339,8 @@ steps:
       - linux/arm64
       - linux/arm
       - linux/s390x
-    target: "rancher/local-path-provisioner:${DRONE_TAG}"
-    template: "rancher/local-path-provisioner:${DRONE_TAG}-ARCH"
+    target: "lizhongxuan/smart-local-provisioner:${DRONE_TAG}"
+    template: "lizhongxuan/smart-local-provisioner:${DRONE_TAG}-ARCH"
   when:
     instance:
     - drone-publish.rancher.io
