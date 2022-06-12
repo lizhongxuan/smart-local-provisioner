@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -67,18 +66,24 @@ type LocalPathProvisioner struct {
 }
 
 type NodePathMapData struct {
-	Node  string   `json:"node,omitempty"`
+	PreserveVolum int64 `json:"preserve_volum,omitempty"` // 磁盘保留空间,当FreeVolum少于PreserveVolum时,则不分配
 	Paths []string `json:"paths,omitempty"`
 }
 
 type ConfigData struct {
-	NodePathMap []*NodePathMapData `json:"nodePathMap,omitempty"`
-
+	NodePathMap map[string]*NodePathMapData `json:"nodePathMap,omitempty"`
 	CmdTimeoutSeconds int `json:"cmdTimeoutSeconds,omitempty"`
 }
 
 type NodePathMap struct {
-	Paths map[string]struct{}
+	PreserveVolum int64 // 磁盘保留空间,FreeVolum少于PreserveVolum则不分配
+	Paths map[string]*Disk
+}
+
+type Disk struct {
+	MaxVolume int64 // 磁盘最大空间,以M为单位
+	FreeVolum int64 // 磁盘剩余空间,以M为单位
+	Pods map[string][]string // 使用在该路径上的pod.key为命名空间,value为podname数组
 }
 
 type Config struct {
@@ -115,6 +120,7 @@ func NewProvisioner(stopCh chan struct{}, kubeClient *clientset.Clientset,
 	return p, nil
 }
 
+// refreshConfig 刷新配置,启动或每隔30秒调用
 func (p *LocalPathProvisioner) refreshConfig() error {
 	p.configMutex.Lock()
 	defer p.configMutex.Unlock()
@@ -123,10 +129,14 @@ func (p *LocalPathProvisioner) refreshConfig() error {
 	if err != nil {
 		return err
 	}
-	// no need to update
-	if reflect.DeepEqual(configData, p.configData) {
-		return nil
-	}
+	//// no need to update
+	//if reflect.DeepEqual(configData, p.configData) {
+	//	return nil
+	//}
+
+	// collect disk's info on nodes.
+
+
 	config, err := canonicalizeConfig(configData)
 	if err != nil {
 		return err
@@ -162,6 +172,7 @@ func (p *LocalPathProvisioner) watchAndRefreshConfig() {
 	}()
 }
 
+// TODO: 有设置则使用设置路径,没有则返回node上磁盘空间最多的路径
 func (p *LocalPathProvisioner) getRandomPathOnNode(node string) (string, error) {
 	p.configMutex.RLock()
 	defer p.configMutex.RUnlock()
@@ -183,11 +194,23 @@ func (p *LocalPathProvisioner) getRandomPathOnNode(node string) (string, error) 
 	if len(paths) == 0 {
 		return "", fmt.Errorf("no local path available on node %v", node)
 	}
+
 	path := ""
-	for path = range paths {
-		break
+	err := fmt.Errorf("no local path available on node %v", node)
+	var freevolum int64
+	for pa,disk := range paths {
+		if disk.FreeVolum < npMap.PreserveVolum{
+			if path == "" {
+				err = fmt.Errorf("FreeVolum less than PreserveVolum on node %v", node)
+			}
+			continue
+		}
+		if disk.FreeVolum > freevolum {
+			path = pa
+			err = nil
+		}
 	}
-	return path, nil
+	return path, err
 }
 
 func (p *LocalPathProvisioner) Provision(opts pvController.ProvisionOptions) (*v1.PersistentVolume, error) {
@@ -520,29 +543,42 @@ func canonicalizeConfig(data *ConfigData) (cfg *Config, err error) {
 	}()
 	cfg = &Config{}
 	cfg.NodePathMap = map[string]*NodePathMap{}
-	for _, n := range data.NodePathMap {
-		if cfg.NodePathMap[n.Node] != nil {
-			return nil, fmt.Errorf("duplicate node %v", n.Node)
+	for nodename, n := range data.NodePathMap {
+		if cfg.NodePathMap[nodename] != nil {
+			return nil, fmt.Errorf("duplicate node %v", nodename)
 		}
-		npMap := &NodePathMap{Paths: map[string]struct{}{}}
-		cfg.NodePathMap[n.Node] = npMap
+
+		if n.PreserveVolum == 0 {
+			// Default 10G
+			n.PreserveVolum = 10 * 1024
+		}
+
+		npMap := &NodePathMap{PreserveVolum: n.PreserveVolum,Paths: map[string]*Disk{}}
+		cfg.NodePathMap[nodename] = npMap
 		for _, p := range n.Paths {
 			if p[0] != '/' {
-				return nil, fmt.Errorf("path must start with / for path %v on node %v", p, n.Node)
+				return nil, fmt.Errorf("path must start with / for path %v on node %v", p, nodename)
 			}
 			path, err := filepath.Abs(p)
 			if err != nil {
 				return nil, err
 			}
 			if path == "/" {
-				return nil, fmt.Errorf("cannot use root ('/') as path on node %v", n.Node)
+				return nil, fmt.Errorf("cannot use root ('/') as path on node %v", nodename)
 			}
 			if _, ok := npMap.Paths[path]; ok {
-				return nil, fmt.Errorf("duplicate path %v on node %v", p, n.Node)
+				return nil, fmt.Errorf("duplicate path %v on node %v", p, nodename)
 			}
-			npMap.Paths[path] = struct{}{}
+
+			// 更新disk信息
+			npMap.Paths[path] = &Disk{
+			}
 		}
 	}
+
+	// 将每个节点磁盘信息写到NodePathMap
+
+
 	if data.CmdTimeoutSeconds > 0 {
 		cfg.CmdTimeoutSeconds = data.CmdTimeoutSeconds
 	} else {
