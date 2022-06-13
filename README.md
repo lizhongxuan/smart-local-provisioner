@@ -6,9 +6,10 @@ Smart-Local-Provisioner Based on Local-Path-Provisioner. Storage Provisioner pro
 
 
 ### Features
-1. No support for the volume capacity limit currently.
+1. Support for the volume capacity limit currently.(Option)
 2. If no path is specified, available disks are automatically found.
 3. Support  Multiple disks.
 4. The remaining disk space is displayed.
-5. You can see which pods are running on your disk.
+5. Displays running pods on disk.
 6. Limit the number of pods on your disk.
+7. Manage and monitor disks.(Base node-exportor)
