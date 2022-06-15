@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"smart-local-provisioner/util/trylock"
 	"strconv"
 	"strings"
 	"sync"
@@ -62,6 +63,8 @@ type LocalPathProvisioner struct {
 	configFile    string
 	configMapName string
 	configMutex   *sync.RWMutex
+	diskConfigMutex *trylock.TryLock
+	diskConifgmap map[string]*DiskInfo
 	helperPod     *v1.Pod
 }
 
@@ -107,15 +110,21 @@ func NewProvisioner(stopCh chan struct{}, kubeClient *clientset.Clientset,
 		configData:    nil,
 		configMapName: configMapName,
 		configMutex:   &sync.RWMutex{},
+		diskConfigMutex: trylock.Build(),
 	}
 	var err error
 	p.helperPod, err = loadHelperPodFile(helperPodYaml)
 	if err != nil {
 		return nil, err
 	}
+
+	if err := p.refreshDiskConfig(); err != nil {
+		return nil, err
+	}
 	if err := p.refreshConfig(); err != nil {
 		return nil, err
 	}
+	p.watchAndRefreshDiskConfig()
 	p.watchAndRefreshConfig()
 	return p, nil
 }
